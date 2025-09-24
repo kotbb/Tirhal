@@ -67,7 +67,7 @@ if (bookTourBtn) {
   bookTourBtn.addEventListener('click', (e) => {
     bookTourBtn.textContent = 'Processing...';
     const tourId = bookTourBtn.dataset.tourId;
-    console.log(tourId);
+    //console.log(tourId);
     bookTour(tourId);
   });
 }

@@ -14,7 +14,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
-const { title } = require('process');
+const compression = require('compression');
 
 const app = express();
 app.set('view engine', 'pug');
@@ -123,6 +123,9 @@ app.use(
     ],
   })
 );
+
+// Compression
+app.use(compression());
 
 // Middleware to add request time variable to the request object to be used by the next middlewares or routes.
 app.use((req, res, next) => {

@@ -66,7 +66,7 @@ const resizeTourImage = catchAsync(async (req, res, next) => {
     })
   );
   //req.body.images = req.body.images.join(',');
-  console.log(req.body);
+  //console.log(req.body);
   next();
 });
 
@@ -74,7 +74,7 @@ const aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingsAverage,price';
   req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
-  console.log(req.query);
+  //console.log(req.query);
   next();
 };
 const getAllTours = factory.getAll(Tour);
@@ -180,7 +180,7 @@ const getToursWithin = catchAsync(async (req, res, next) => {
   // 3963.2 and 6378.1 are the radius of the earth in miles and kilometers
   const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
 
-  console.log(distance, latlng, unit);
+  //console.log(distance, latlng, unit);
 
   const tours = await Tour.find({
     startLocation: {
