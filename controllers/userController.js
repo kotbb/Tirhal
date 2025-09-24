@@ -1,11 +1,11 @@
-const catchAsync = require('../utils/catchAsync');
+import catchAsync from '../utils/catchAsync.js';
 
-const User = require('../models/userModel');
-const AppError = require('../utils/appError');
-const factory = require('./handlerFactory');
+import User from '../models/userModel.js';
+import AppError from '../utils/appError.js';
+import factory from './handlerFactory.js';
 
-const multer = require('multer');
-const sharp = require('sharp');
+import multer from 'multer';
+import sharp from 'sharp';
 
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -113,7 +113,7 @@ const updateUser = factory.updateOne(User);
 
 const deleteUser = factory.deleteOne(User);
 
-module.exports = {
+export default {
   uploadUserPhoto,
   resizeUserPhoto,
   getAllUsers,

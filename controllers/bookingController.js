@@ -1,10 +1,12 @@
-const Tour = require('../models/tourModel');
-const Booking = require('../models/bookingModel');
-const factory = require('./handlerFactory');
-const AppError = require('../utils/appError');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const catchAsync = require('../utils/catchAsync');
+import Tour from '../models/tourModel.js';
+import Booking from '../models/bookingModel.js';
+import factory from './handlerFactory.js';
+import catchAsync from '../utils/catchAsync.js';
+import Stripe from 'stripe';
 
+const stripe = Stripe(
+  'sk_test_51SAH5t3GKhc6jso59Ripczvd132mpKeiQlk3n26ItzYrHmojulR08aoPt4h7CIOhAUekLap44uQdPQR81WRC2SyA00iBFC33Zf'
+);
 const getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
@@ -59,7 +61,7 @@ const getAllBookings = factory.getAll(Booking);
 const updateBooking = factory.updateOne(Booking);
 const deleteBooking = factory.deleteOne(Booking);
 
-module.exports = {
+export default {
   getCheckoutSession,
   createBookingCheckout,
   createBooking,

@@ -1,6 +1,6 @@
-const express = require('express');
-const bookingController = require('../controllers/bookingController');
-const authController = require('../controllers/authController');
+import express from 'express';
+import bookingController from '../controllers/bookingController.js';
+import authController from '../controllers/authController.js';
 const router = express.Router();
 
 router.use(authController.protect);
@@ -18,4 +18,4 @@ router
   .patch(bookingController.updateBooking)
   .delete(bookingController.deleteBooking);
 
-module.exports = router;
+export default router;

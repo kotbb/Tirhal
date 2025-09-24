@@ -1,7 +1,7 @@
-const express = require('express');
-const tourController = require('../controllers/tourController');
-const authController = require('../controllers/authController');
-const reviewRouter = require('./reviewRoutes');
+import express from 'express';
+import tourController from '../controllers/tourController.js';
+import authController from '../controllers/authController.js';
+import reviewRouter from './reviewRoutes.js';
 const router = express.Router();
 
 // router.param('id', tourController.checkId);  // that checks if id valid before mongoose
@@ -60,4 +60,4 @@ router
     authController.restrictTo('user'),
     reviewController.createReview
   ); */
-module.exports = router;
+export default router;

@@ -1,7 +1,11 @@
-const nodemailer = require('nodemailer');
-const pug = require('pug');
-const { htmlToText } = require('html-to-text');
+import nodemailer from 'nodemailer';
+import { htmlToText } from 'html-to-text';
+import pug from 'pug';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 class Email {
   constructor(user, url) {
     this.to = user.email;
@@ -62,4 +66,4 @@ class Email {
   }
 }
 
-module.exports = Email;
+export default Email;

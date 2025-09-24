@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 
-const userController = require('../controllers/userController');
-const authController = require('../controllers/authController');
+import userController from '../controllers/userController.js';
+import authController from '../controllers/authController.js';
 const router = express.Router();
 
 router.post('/signup', authController.signUp);
@@ -41,4 +41,4 @@ router
 // GET /tour/123456/reviews         // get all reviews for the tour with the id of tour
 // GET /tour/123456/reviews/123456  // get a review with the id of review
 
-module.exports = router;
+export default router;

@@ -1,8 +1,8 @@
-const Tour = require('../models/tourModel');
-const Booking = require('../models/bookingModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const User = require('../models/userModel');
+import Tour from '../models/tourModel.js';
+import Booking from '../models/bookingModel.js';
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
+import User from '../models/userModel.js';
 
 const getOverview = catchAsync(async (req, res, next) => {
   // 1) Get tour data from collection
@@ -82,7 +82,7 @@ const updateUserData = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = {
+export default {
   getOverview,
   getTour,
   getLoginForm,

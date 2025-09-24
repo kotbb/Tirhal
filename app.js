@@ -1,20 +1,25 @@
-const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
-const AppError = require('./utils/appError');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
-const hpp = require('hpp');
-const cookieParser = require('cookie-parser');
-const helmet = require('helmet');
-const globalErrorHandler = require('./controllers/errorController');
-const tourRouter = require('./routes/tourRoutes');
-const userRouter = require('./routes/userRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
-const viewRouter = require('./routes/viewRoutes');
-const bookingRouter = require('./routes/bookingRoutes');
-const compression = require('compression');
+import express from 'express';
+import morgan from 'morgan';
+import AppError from './utils/appError.js';
+import rateLimit from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
+import createDOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+import hpp from 'hpp';
+import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import globalErrorHandler from './controllers/errorController.js';
+import tourRouter from './routes/tourRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import reviewRouter from './routes/reviewRoutes.js';
+import viewRouter from './routes/viewRoutes.js';
+import bookingRouter from './routes/bookingRoutes.js';
+import compression from 'compression';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.set('view engine', 'pug');
@@ -108,7 +113,13 @@ app.use(cookieParser());
 app.use(mongoSanitize());
 
 // Data Sanitization against XSS
-app.use(xss());
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
+const dirtyInput =
+  '<img src="x" onerror="alert(\'XSS\')"> <p>This is safe.</p>';
+const cleanOutput = DOMPurify.sanitize(dirtyInput);
+console.log(cleanOutput);
 
 // Prevent Parameter Pollution, whitelist the parameters that we want to allow to be duplicated
 app.use(
@@ -160,4 +171,4 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 //--------------------------------------
-module.exports = app;
+export default app;

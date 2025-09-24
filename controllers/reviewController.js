@@ -1,7 +1,7 @@
-const Review = require('../models/reviewModel');
+import Review from '../models/reviewModel.js';
 //const AppError = require('../utils/appError');
 //const catchAsync = require('../utils/catchAsync');
-const factory = require('./handlerFactory');
+import factory from './handlerFactory.js';
 //---------------------------------------------------
 
 const setTourUserIds = (req, res, next) => {
@@ -20,7 +20,7 @@ const updateReview = factory.updateOne(Review);
 
 const deleteReview = factory.deleteOne(Review);
 
-module.exports = {
+export default {
   setTourUserIds,
   createReview,
   getAllReviews,

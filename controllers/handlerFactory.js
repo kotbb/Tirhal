@@ -1,6 +1,6 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const APIFeatures = require('../utils/apiFeatures');
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
+import APIFeatures from '../utils/apiFeatures.js';
 //---------------------------------------------------
 
 const createOne = (Model) =>
@@ -88,7 +88,7 @@ const getAll = (Model) =>
     });
   });
 
-module.exports = {
+export default {
   createOne,
   getOne,
   getAll,

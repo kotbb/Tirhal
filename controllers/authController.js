@@ -1,11 +1,11 @@
-const User = require('../models/userModel');
-const { promisify } = require('util'); // converts callback based function to promise based functionx
-const jwt = require('jsonwebtoken');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const crypto = require('crypto');
-const Email = require('../utils/email');
-const parseTimeToMs = require('../utils/parseTimeToMs');
+import User from '../models/userModel.js';
+import { promisify } from 'util'; // converts callback based function to promise based functionx
+import jwt from 'jsonwebtoken';
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
+import crypto from 'crypto';
+import Email from '../utils/email.js';
+import parseTimeToMs from '../utils/parseTimeToMs.js';
 //---------------------------------------------------------------
 // Signing a token with the user id and the secret key and the expiration time
 const signToken = (id) => {
@@ -253,7 +253,7 @@ const updatePassword = catchAsync(async (req, res, next) => {
   // 4) Log the user in, send JWT
   createSendToken(user, 200, res);
 });
-module.exports = {
+export default {
   signUp,
   login,
   logout,

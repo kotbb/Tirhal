@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const parseTimeToMs = require('../utils/parseTimeToMs');
+import mongoose from 'mongoose';
+import validator from 'validator';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import parseTimeToMs from '../utils/parseTimeToMs.js';
 
 // name, email, password, passwordConfirm, photo
 const userSchema = new mongoose.Schema({
@@ -126,5 +126,5 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-const userModel = mongoose.model('User', userSchema);
-module.exports = userModel;
+const User = mongoose.model('User', userSchema);
+export default User;

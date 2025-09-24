@@ -1,12 +1,12 @@
-const Tour = require('../models/tourModel');
-const APIFeatures = require('../utils/apiFeatures');
-const AppError = require('../utils/appError');
-const catchAsync = require('../utils/catchAsync');
-const factory = require('./handlerFactory');
+import Tour from '../models/tourModel.js';
+import APIFeatures from '../utils/apiFeatures.js';
+import AppError from '../utils/appError.js';
+import catchAsync from '../utils/catchAsync.js';
+import factory from './handlerFactory.js';
 
 // Image upload
-const multer = require('multer');
-const sharp = require('sharp');
+import multer from 'multer';
+import sharp from 'sharp';
 
 const multerStorage = multer.memoryStorage();
 
@@ -234,7 +234,7 @@ const getDistances = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = {
+export default {
   getAllTours,
   getTourById,
   createTour,

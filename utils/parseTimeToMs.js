@@ -1,4 +1,4 @@
-module.exports = (time) => {
+export default (time) => {
   const timeUnit = time.slice(-1);
   const timeValue = parseInt(time.slice(0, -1));
   switch (timeUnit) {

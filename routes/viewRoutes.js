@@ -1,7 +1,7 @@
-const express = require('express');
-const viewsController = require('../controllers/viewsController');
-const authController = require('../controllers/authController');
-const bookingController = require('../controllers/bookingController');
+import express from 'express';
+import viewsController from '../controllers/viewsController.js';
+import authController from '../controllers/authController.js';
+import bookingController from '../controllers/bookingController.js';
 const router = express.Router();
 
 router.get(
@@ -21,4 +21,4 @@ router.post(
   viewsController.updateUserData
 );
 
-module.exports = router;
+export default router;
