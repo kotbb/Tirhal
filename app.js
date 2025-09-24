@@ -30,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 1) Global Middlewares
 
+// Trust proxy
+app.enable('trust proxy');
+
 // set security http headers using HELMET
 app.use(
   helmet({

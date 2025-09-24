@@ -14,15 +14,16 @@ const signToken = (id) => {
   });
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
       Date.now() + parseTimeToMs(process.env.JWT_COOKIE_EXPIRES_IN)
     ),
     httpOnly: true, // This is to prevent the cookie from being accessed by the browser, it will be only stored in the browser and send it automatically along with every request
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  if (cookieOptions.secure) cookieOptions.sameSite = 'strict';
 
   user.password = undefined;
   res.cookie('jwt', token, cookieOptions);
@@ -50,7 +51,7 @@ const signUp = catchAsync(async (req, res, next) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
   await new Email(newUser, url).sendWelcome();
   // jwt.sign(payload,secret,options)
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 // Logging in a user
@@ -69,7 +70,7 @@ const login = catchAsync(async (req, res, next) => {
   }
 
   // 3) If everything is ok, send token to client
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 const logout = catchAsync(async (req, res, next) => {
@@ -233,7 +234,7 @@ const resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 4) Log the user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 const updatePassword = catchAsync(async (req, res, next) => {
@@ -251,7 +252,7 @@ const updatePassword = catchAsync(async (req, res, next) => {
   await user.save(); // We actually use save() for validation because findOneAndUpdate() doesn't trigger the pre('save') middlewares
 
   // 4) Log the user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 export default {
   signUp,
