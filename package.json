@@ -8,6 +8,7 @@
   },
   "browserslist": "> 0.25%, not dead",
   "scripts": {
+    "start": "node server.js",
     "start:dev": "nodemon server.js",
     "start:prod": "set NODE_ENV=production&&nodemon server.js",
     "debug": "ndb server.js",
