@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import AppError from './utils/appError.js';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
+import cors from 'cors';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 import hpp from 'hpp';
@@ -29,6 +30,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 1) Global Middlewares
+
+// Enable Access Control Allow Origin for all routes, this will for get & post requests only
+app.use(cors());
+
+// to enable for other methods we should respond to the options request that the browser will send to the server to check if the server supports the request method when making put, patch, and delete requests
+app.options('*', cors());
 
 // Trust proxy
 app.enable('trust proxy');

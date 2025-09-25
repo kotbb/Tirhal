@@ -35,6 +35,7 @@ process.on('unhandledRejection', (err) => {
   });
 });
 
+// A signal that sent to the process to tell it to terminate gracefully in production by vercel, heroku, ...etc.
 process.on('SIGTERM', () => {
   console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
   server.close(() => {
