@@ -74,6 +74,11 @@ const connectSrcUrls = [
   'https://checkout.stripe.com',
   'https://vercel.live',
 ];
+const frameSrcUrls = [
+  'https://js.stripe.com',
+  'https://checkout.stripe.com',
+  'https://vercel.live',
+];
 
 const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
@@ -84,11 +89,7 @@ app.use(
       connectSrc: ["'self'", ...connectSrcUrls],
       scriptSrc: ["'self'", ...scriptSrcUrls],
       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-      frameSrc: [
-        "'self'",
-        'https://js.stripe.com',
-        'https://checkout.stripe.com',
-      ],
+      frameSrc: ["'self'", ...frameSrcUrls],
       workerSrc: ["'self'", 'blob:'],
       objectSrc: [],
       imgSrc: ["'self'", 'blob:', 'data:', 'https:', 'http:'],
