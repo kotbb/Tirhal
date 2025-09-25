@@ -56,6 +56,7 @@ const scriptSrcUrls = [
   'https://unpkg.com/',
   'https://js.stripe.com',
   'https://checkout.stripe.com',
+  'https://vercel.live',
 ];
 const styleSrcUrls = [
   'https://api.mapbox.com/',
@@ -71,6 +72,7 @@ const connectSrcUrls = [
   'https://unpkg.com/',
   'https://api.stripe.com',
   'https://checkout.stripe.com',
+  'https://vercel.live',
 ];
 
 const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
