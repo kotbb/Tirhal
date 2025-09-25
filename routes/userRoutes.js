@@ -38,7 +38,7 @@ router
   .delete(authController.restrictTo('admin'), userController.deleteUser);
 
 // POST /tour/123456/reviews          // create a review with the id of tour and id of logged in user
-// GET /tour/123456/reviews         // get all reviews for the tour with the id of tour
-// GET /tour/123456/reviews/123456  // get a review with the id of review
+// GET /tour/123456/reviews           // get all reviews for the tour with the id of tour
+// GET /tour/123456/reviews/123456    // get a review with the id of review
 
 export default router;

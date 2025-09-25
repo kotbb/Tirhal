@@ -15,6 +15,7 @@ import userRouter from './routes/userRoutes.js';
 import reviewRouter from './routes/reviewRoutes.js';
 import viewRouter from './routes/viewRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
+import bookingController from './controllers/bookingController.js';
 import compression from 'compression';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -101,6 +102,13 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api', limiter);
+
+// Webhook Checkout, we need the body as it is in the request so we need to put it before the body parser that will convert the body to JSON
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 // Development Logging
 if (process.env.NODE_ENV === 'development') {
