@@ -13,27 +13,6 @@ const signToken = (id) => {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
-
-const logout = catchAsync(async (req, res, next) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
-  const cookieOptions = {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-    path: '/',
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-  };
-
-  if (process.env.NODE_ENV === 'production') {
-    cookieOptions.sameSite = 'lax';
-  }
-
-  res.cookie('jwt', 'loggedout', cookieOptions);
-
-  res.status(200).json({ status: 'success' });
-});
-
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
@@ -60,6 +39,26 @@ const createSendToken = (user, statusCode, req, res) => {
     data: { user },
   });
 };
+
+const logout = catchAsync(async (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  const cookieOptions = {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+    path: '/',
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+  };
+
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'lax';
+  }
+
+  res.cookie('jwt', 'loggedout', cookieOptions);
+
+  res.status(200).json({ status: 'success' });
+});
 
 // Signing up a new user
 const signUp = catchAsync(async (req, res, next) => {

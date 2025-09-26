@@ -4,7 +4,7 @@ Natours is a tour booking application built with modern backend technologies. It
 
 ## Live Demo
 
-**View the live application here: [https://natours-hazel-nu.vercel.app/](https://natours-hazel-nu.vercel.app/)**
+**View the live application here: [https://natours-kotb.vercel.app/](https://natours-kotb.vercel.app/)**
 
 ---
 

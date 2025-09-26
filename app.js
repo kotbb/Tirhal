@@ -37,10 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 1) Global Middlewares
 
-const allowedOrigins = process.env.FRONTEND_ORIGIN
-  ? process.env.FRONTEND_ORIGIN.split(',').map((o) => o.trim())
-  : true;
-
+const allowedOrigins = process.env.FRONTEND_ORIGIN;
 app.use(
   cors({
     origin: allowedOrigins,
