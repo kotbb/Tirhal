@@ -24,6 +24,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+const trustProxySetting =
+  process.env.NODE_ENV === 'production' ? 1 : 'loopback';
+app.set('trust proxy', trustProxySetting);
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -32,14 +37,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 1) Global Middlewares
 
-// Enable Access Control Allow Origin for all routes, this will for get & post requests only
-app.use(cors());
+const allowedOrigins = process.env.FRONTEND_ORIGIN
+  ? process.env.FRONTEND_ORIGIN.split(',').map((o) => o.trim())
+  : true;
 
-// to enable for other methods we should respond to the options request that the browser will send to the server to check if the server supports the request method when making put, patch, and delete requests
-app.options('*', cors());
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
-// Trust proxy
-app.enable('trust proxy');
+app.options(
+  '*',
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 // set security http headers using HELMET
 app.use(
@@ -140,7 +155,6 @@ const DOMPurify = createDOMPurify(window);
 const dirtyInput =
   '<img src="x" onerror="alert(\'XSS\')"> <p>This is safe.</p>';
 const cleanOutput = DOMPurify.sanitize(dirtyInput);
-console.log(cleanOutput);
 
 // Prevent Parameter Pollution, whitelist the parameters that we want to allow to be duplicated
 app.use(

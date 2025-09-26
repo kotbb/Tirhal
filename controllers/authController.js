@@ -14,26 +14,50 @@ const signToken = (id) => {
   });
 };
 
+const logout = catchAsync(async (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  const cookieOptions = {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+    path: '/',
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+  };
+
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'lax';
+  }
+
+  res.cookie('jwt', 'loggedout', cookieOptions);
+
+  res.status(200).json({ status: 'success' });
+});
+
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
+
   const cookieOptions = {
     expires: new Date(
       Date.now() + parseTimeToMs(process.env.JWT_COOKIE_EXPIRES_IN)
     ),
-    httpOnly: true, // This is to prevent the cookie from being accessed by the browser, it will be only stored in the browser and send it automatically along with every request
+    httpOnly: true,
+    path: '/',
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
-  if (cookieOptions.secure) cookieOptions.sameSite = 'strict';
+
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'lax';
+  }
+
+  res.cookie('jwt', token, cookieOptions);
 
   user.password = undefined;
-  res.cookie('jwt', token, cookieOptions);
 
   res.status(statusCode).json({
     status: 'success',
     token,
-    data: {
-      user,
-    },
+    data: { user },
   });
 };
 
@@ -71,16 +95,6 @@ const login = catchAsync(async (req, res, next) => {
 
   // 3) If everything is ok, send token to client
   createSendToken(user, 200, req, res);
-});
-
-const logout = catchAsync(async (req, res, next) => {
-  res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 5 * 1000), // expires in 5 sec
-    httpOnly: true,
-  });
-  res.status(200).json({
-    status: 'success',
-  });
 });
 
 // Protecting routes
@@ -132,6 +146,10 @@ const protect = catchAsync(async (req, res, next) => {
 
 // Protecting routes
 const isLoggedIn = async (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   try {
     if (req.cookies.jwt) {
       // 1) Getting token

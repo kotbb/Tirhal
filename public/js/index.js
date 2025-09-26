@@ -76,6 +76,6 @@ const alertMessage = document.querySelector('body').dataset.alert;
 if (alertMessage) {
   showAlert('success', alertMessage, 10);
   window.setTimeout(() => {
-    window.location.reload();
+    window.location.href = '/my-tours';
   }, 10000);
 }

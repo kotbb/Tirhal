@@ -5,6 +5,7 @@ export const login = async (email, password) => {
     const res = await axios({
       method: 'POST',
       url: '/api/v1/users/login',
+      withCredentials: true,
       data: {
         email,
         password,
@@ -26,11 +27,13 @@ export const logout = async () => {
     const res = await axios({
       method: 'GET',
       url: '/api/v1/users/logout',
+      withCredentials: true,
     });
     if (res.data.status === 'success') {
       showAlert('success', 'Logged out successfully');
-      location.reload(true);
-      window.location.href = '/';
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
     }
   } catch (error) {
     console.log(error);

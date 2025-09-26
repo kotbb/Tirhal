@@ -300,7 +300,7 @@ const alertMessage = document.querySelector('body').dataset.alert;
 if (alertMessage) {
     (0, _alert.showAlert)('success', alertMessage, 10);
     window.setTimeout(()=>{
-        window.location.reload();
+        window.location.href = '/my-tours';
     }, 10000);
 }
 
@@ -17452,6 +17452,7 @@ const login = async (email, password)=>{
         const res = await (0, _axiosDefault.default)({
             method: 'POST',
             url: '/api/v1/users/login',
+            withCredentials: true,
             data: {
                 email,
                 password
@@ -17471,12 +17472,14 @@ const logout = async ()=>{
     try {
         const res = await (0, _axiosDefault.default)({
             method: 'GET',
-            url: '/api/v1/users/logout'
+            url: '/api/v1/users/logout',
+            withCredentials: true
         });
         if (res.data.status === 'success') {
             (0, _alert.showAlert)('success', 'Logged out successfully');
-            location.reload(true);
-            window.location.href = '/';
+            window.setTimeout(()=>{
+                location.assign('/');
+            }, 1500);
         }
     } catch (error) {
         console.log(error);
