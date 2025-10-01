@@ -32,8 +32,13 @@ app.set('trust proxy', trustProxySetting);
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// this will handle static files and make it in the root in the browser if it doesn't find any route that handle the url if I want to open overview.htm => 127.0.0.1:3000/overview.html not 127.0.0.1:3000/public/overview.html
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  express.static(path.join(__dirname, 'public'), {
+    maxAge: '1d', // Cache for 1 day
+    etag: true,
+    lastModified: true,
+  })
+);
 
 // 1) Global Middlewares
 
