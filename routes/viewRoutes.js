@@ -1,7 +1,6 @@
 import express from 'express';
 import viewsController from '../controllers/viewsController.js';
 import authController from '../controllers/authController.js';
-import bookingController from '../controllers/bookingController.js';
 const router = express.Router();
 
 router.use(viewsController.alerts);

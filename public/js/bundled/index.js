@@ -243,6 +243,7 @@ var _webImmediateJs = require("core-js/modules/web.immediate.js");
 var _runtime = require("regenerator-runtime/runtime");
 var _leaflet = require("./leaflet");
 var _login = require("./login");
+var _logout = require("./logout");
 var _updateSettings = require("./updateSettings");
 var _stripe = require("./stripe");
 var _alert = require("./alert");
@@ -264,7 +265,7 @@ if (loginForm) loginForm.addEventListener('submit', (e)=>{
 });
 if (logoutBtn) logoutBtn.addEventListener('click', (e)=>{
     e.preventDefault();
-    (0, _login.logout)();
+    (0, _logout.logout)();
 });
 if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
     e.preventDefault();
@@ -304,7 +305,7 @@ if (alertMessage) {
     }, 10000);
 }
 
-},{"core-js/modules/es.regexp.flags.js":"6ntvp","core-js/modules/es.typed-array.set.js":"hA0Fq","core-js/modules/esnext.array.last-index.js":"1boBc","core-js/modules/esnext.array.last-item.js":"jYNfI","core-js/modules/esnext.composite-key.js":"a2ZYV","core-js/modules/esnext.composite-symbol.js":"1kkme","core-js/modules/esnext.map.delete-all.js":"5dxaS","core-js/modules/esnext.map.every.js":"b3lJy","core-js/modules/esnext.map.filter.js":"fx4vm","core-js/modules/esnext.map.find.js":"3K00T","core-js/modules/esnext.map.find-key.js":"8rTLQ","core-js/modules/esnext.map.from.js":"atHqK","core-js/modules/esnext.map.group-by.js":"f6er3","core-js/modules/esnext.map.includes.js":"4p5Ww","core-js/modules/esnext.map.key-by.js":"gWRv0","core-js/modules/esnext.map.key-of.js":"536HC","core-js/modules/esnext.map.map-keys.js":"aYbPO","core-js/modules/esnext.map.map-values.js":"91Nul","core-js/modules/esnext.map.merge.js":"aKAZ3","core-js/modules/esnext.map.of.js":"03oxJ","core-js/modules/esnext.map.reduce.js":"e62BS","core-js/modules/esnext.map.some.js":"iDZ0r","core-js/modules/esnext.map.update.js":"ikWSO","core-js/modules/esnext.math.clamp.js":"3ljDn","core-js/modules/esnext.math.deg-per-rad.js":"jvcLJ","core-js/modules/esnext.math.degrees.js":"fp3bu","core-js/modules/esnext.math.fscale.js":"dh1Um","core-js/modules/esnext.math.iaddh.js":"1zcu7","core-js/modules/esnext.math.imulh.js":"8Lher","core-js/modules/esnext.math.isubh.js":"ar21t","core-js/modules/esnext.math.rad-per-deg.js":"lmAVv","core-js/modules/esnext.math.radians.js":"fGqmN","core-js/modules/esnext.math.scale.js":"ctrKE","core-js/modules/esnext.math.seeded-prng.js":"f7zrn","core-js/modules/esnext.math.signbit.js":"6anZC","core-js/modules/esnext.math.umulh.js":"6qWLZ","core-js/modules/esnext.number.from-string.js":"eqepw","core-js/modules/esnext.observable.js":"4bqoI","core-js/modules/esnext.promise.try.js":"5AW6c","core-js/modules/esnext.reflect.define-metadata.js":"2jnVh","core-js/modules/esnext.reflect.delete-metadata.js":"apuTx","core-js/modules/esnext.reflect.get-metadata.js":"3fBhz","core-js/modules/esnext.reflect.get-metadata-keys.js":"7sMg9","core-js/modules/esnext.reflect.get-own-metadata.js":"3bjqp","core-js/modules/esnext.reflect.get-own-metadata-keys.js":"7SdgE","core-js/modules/esnext.reflect.has-metadata.js":"abXJf","core-js/modules/esnext.reflect.has-own-metadata.js":"9Gwdg","core-js/modules/esnext.reflect.metadata.js":"2Sq50","core-js/modules/esnext.set.add-all.js":"hGPn2","core-js/modules/esnext.set.delete-all.js":"aCcRK","core-js/modules/esnext.set.difference.js":"h5Oe6","core-js/modules/esnext.set.every.js":"iMuLX","core-js/modules/esnext.set.filter.js":"Rc2JO","core-js/modules/esnext.set.find.js":"fLgG4","core-js/modules/esnext.set.from.js":"6v73l","core-js/modules/esnext.set.intersection.js":"78F1I","core-js/modules/esnext.set.is-disjoint-from.js":"l8evo","core-js/modules/esnext.set.is-subset-of.js":"9eZgm","core-js/modules/esnext.set.is-superset-of.js":"8087U","core-js/modules/esnext.set.join.js":"42qqp","core-js/modules/esnext.set.map.js":"4YIKL","core-js/modules/esnext.set.of.js":"i1Mq5","core-js/modules/esnext.set.reduce.js":"doktv","core-js/modules/esnext.set.some.js":"jCgSu","core-js/modules/esnext.set.symmetric-difference.js":"kvLfk","core-js/modules/esnext.set.union.js":"jPtQi","core-js/modules/esnext.string.at.js":"f93m5","core-js/modules/esnext.string.code-points.js":"cKr9z","core-js/modules/esnext.symbol.dispose.js":"fLC1u","core-js/modules/esnext.symbol.observable.js":"7fBvz","core-js/modules/esnext.symbol.pattern-match.js":"kxTGA","core-js/modules/esnext.weak-map.delete-all.js":"gqLBu","core-js/modules/esnext.weak-map.from.js":"21QoB","core-js/modules/esnext.weak-map.of.js":"ip7dz","core-js/modules/esnext.weak-set.add-all.js":"6kVIv","core-js/modules/esnext.weak-set.delete-all.js":"7CLrZ","core-js/modules/esnext.weak-set.from.js":"1omMg","core-js/modules/esnext.weak-set.of.js":"kEi8P","core-js/modules/web.immediate.js":"22acx","regenerator-runtime/runtime":"gwp18","./leaflet":"5XowJ","./login":"b5glx","./updateSettings":"8z430","./stripe":"gZf86","./alert":"a0yKe"}],"6ntvp":[function(require,module,exports,__globalThis) {
+},{"core-js/modules/es.regexp.flags.js":"6ntvp","core-js/modules/es.typed-array.set.js":"hA0Fq","core-js/modules/esnext.array.last-index.js":"1boBc","core-js/modules/esnext.array.last-item.js":"jYNfI","core-js/modules/esnext.composite-key.js":"a2ZYV","core-js/modules/esnext.composite-symbol.js":"1kkme","core-js/modules/esnext.map.delete-all.js":"5dxaS","core-js/modules/esnext.map.every.js":"b3lJy","core-js/modules/esnext.map.filter.js":"fx4vm","core-js/modules/esnext.map.find.js":"3K00T","core-js/modules/esnext.map.find-key.js":"8rTLQ","core-js/modules/esnext.map.from.js":"atHqK","core-js/modules/esnext.map.group-by.js":"f6er3","core-js/modules/esnext.map.includes.js":"4p5Ww","core-js/modules/esnext.map.key-by.js":"gWRv0","core-js/modules/esnext.map.key-of.js":"536HC","core-js/modules/esnext.map.map-keys.js":"aYbPO","core-js/modules/esnext.map.map-values.js":"91Nul","core-js/modules/esnext.map.merge.js":"aKAZ3","core-js/modules/esnext.map.of.js":"03oxJ","core-js/modules/esnext.map.reduce.js":"e62BS","core-js/modules/esnext.map.some.js":"iDZ0r","core-js/modules/esnext.map.update.js":"ikWSO","core-js/modules/esnext.math.clamp.js":"3ljDn","core-js/modules/esnext.math.deg-per-rad.js":"jvcLJ","core-js/modules/esnext.math.degrees.js":"fp3bu","core-js/modules/esnext.math.fscale.js":"dh1Um","core-js/modules/esnext.math.iaddh.js":"1zcu7","core-js/modules/esnext.math.imulh.js":"8Lher","core-js/modules/esnext.math.isubh.js":"ar21t","core-js/modules/esnext.math.rad-per-deg.js":"lmAVv","core-js/modules/esnext.math.radians.js":"fGqmN","core-js/modules/esnext.math.scale.js":"ctrKE","core-js/modules/esnext.math.seeded-prng.js":"f7zrn","core-js/modules/esnext.math.signbit.js":"6anZC","core-js/modules/esnext.math.umulh.js":"6qWLZ","core-js/modules/esnext.number.from-string.js":"eqepw","core-js/modules/esnext.observable.js":"4bqoI","core-js/modules/esnext.promise.try.js":"5AW6c","core-js/modules/esnext.reflect.define-metadata.js":"2jnVh","core-js/modules/esnext.reflect.delete-metadata.js":"apuTx","core-js/modules/esnext.reflect.get-metadata.js":"3fBhz","core-js/modules/esnext.reflect.get-metadata-keys.js":"7sMg9","core-js/modules/esnext.reflect.get-own-metadata.js":"3bjqp","core-js/modules/esnext.reflect.get-own-metadata-keys.js":"7SdgE","core-js/modules/esnext.reflect.has-metadata.js":"abXJf","core-js/modules/esnext.reflect.has-own-metadata.js":"9Gwdg","core-js/modules/esnext.reflect.metadata.js":"2Sq50","core-js/modules/esnext.set.add-all.js":"hGPn2","core-js/modules/esnext.set.delete-all.js":"aCcRK","core-js/modules/esnext.set.difference.js":"h5Oe6","core-js/modules/esnext.set.every.js":"iMuLX","core-js/modules/esnext.set.filter.js":"Rc2JO","core-js/modules/esnext.set.find.js":"fLgG4","core-js/modules/esnext.set.from.js":"6v73l","core-js/modules/esnext.set.intersection.js":"78F1I","core-js/modules/esnext.set.is-disjoint-from.js":"l8evo","core-js/modules/esnext.set.is-subset-of.js":"9eZgm","core-js/modules/esnext.set.is-superset-of.js":"8087U","core-js/modules/esnext.set.join.js":"42qqp","core-js/modules/esnext.set.map.js":"4YIKL","core-js/modules/esnext.set.of.js":"i1Mq5","core-js/modules/esnext.set.reduce.js":"doktv","core-js/modules/esnext.set.some.js":"jCgSu","core-js/modules/esnext.set.symmetric-difference.js":"kvLfk","core-js/modules/esnext.set.union.js":"jPtQi","core-js/modules/esnext.string.at.js":"f93m5","core-js/modules/esnext.string.code-points.js":"cKr9z","core-js/modules/esnext.symbol.dispose.js":"fLC1u","core-js/modules/esnext.symbol.observable.js":"7fBvz","core-js/modules/esnext.symbol.pattern-match.js":"kxTGA","core-js/modules/esnext.weak-map.delete-all.js":"gqLBu","core-js/modules/esnext.weak-map.from.js":"21QoB","core-js/modules/esnext.weak-map.of.js":"ip7dz","core-js/modules/esnext.weak-set.add-all.js":"6kVIv","core-js/modules/esnext.weak-set.delete-all.js":"7CLrZ","core-js/modules/esnext.weak-set.from.js":"1omMg","core-js/modules/esnext.weak-set.of.js":"kEi8P","core-js/modules/web.immediate.js":"22acx","regenerator-runtime/runtime":"gwp18","./leaflet":"5XowJ","./login":"b5glx","./updateSettings":"8z430","./stripe":"gZf86","./alert":"a0yKe","./logout":"59Ugw"}],"6ntvp":[function(require,module,exports,__globalThis) {
 'use strict';
 var DESCRIPTORS = require("32574bd865b8e6e5");
 var defineBuiltInAccessor = require("ba3ead2b02aa5c9b");
@@ -17443,7 +17444,6 @@ exports.export = function(dest, destName, get) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "login", ()=>login);
-parcelHelpers.export(exports, "logout", ()=>logout);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alert = require("./alert");
@@ -17451,7 +17451,7 @@ const login = async (email, password)=>{
     try {
         const res = await (0, _axiosDefault.default)({
             method: 'POST',
-            url: '/api/v1/users/login',
+            url: 'api/v1/users/login',
             withCredentials: true,
             data: {
                 email,
@@ -17459,27 +17459,8 @@ const login = async (email, password)=>{
             }
         });
         if (res.data.status === 'success') {
-            //console.log(res.data);
             (0, _alert.showAlert)('success', 'Login successful');
             window.setTimeout(()=>window.location.href = '/', 1000);
-        }
-    } catch (error) {
-        console.log(error);
-        (0, _alert.showAlert)('error', error.response.data.message);
-    }
-};
-const logout = async ()=>{
-    try {
-        const res = await (0, _axiosDefault.default)({
-            method: 'GET',
-            url: '/api/v1/users/logout',
-            withCredentials: true
-        });
-        if (res.data.status === 'success') {
-            (0, _alert.showAlert)('success', 'Logged out successfully');
-            window.setTimeout(()=>{
-                location.assign('/');
-            }, 1500);
         }
     } catch (error) {
         console.log(error);
@@ -22367,16 +22348,17 @@ const hideAlert = ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateSettings", ()=>updateSettings);
+var _alert = require("./alert");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
-var _alert = require("./alert");
 const updateSettings = async (data, type)=>{
     try {
-        const url = type === 'data' ? '/api/v1/users/updateMe' : '/api/v1/users/updateMyPassword';
+        const url = type === 'data' ? 'api/v1/users/updateMe' : 'api/v1/users/updateMyPassword';
         const res = await (0, _axiosDefault.default)({
             method: 'PATCH',
             url,
-            data
+            data,
+            withCredentials: true
         });
         if (res.data.status === 'success') (0, _alert.showAlert)('success', `${type.toUpperCase()} updated successfully`);
     } catch (error) {
@@ -22385,7 +22367,7 @@ const updateSettings = async (data, type)=>{
     }
 };
 
-},{"axios":"fygP2","./alert":"a0yKe","@parcel/transformer-js/src/esmodule-helpers.js":"5ITdS"}],"gZf86":[function(require,module,exports,__globalThis) {
+},{"./alert":"a0yKe","@parcel/transformer-js/src/esmodule-helpers.js":"5ITdS","axios":"fygP2"}],"gZf86":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "bookTour", ()=>bookTour);
@@ -22404,6 +22386,32 @@ const bookTour = async (tourId)=>{
     }
 };
 
-},{"axios":"fygP2","@parcel/transformer-js/src/esmodule-helpers.js":"5ITdS","./alert":"a0yKe"}]},["chLN9"], "chLN9", "parcelRequire11c7", {})
+},{"axios":"fygP2","@parcel/transformer-js/src/esmodule-helpers.js":"5ITdS","./alert":"a0yKe"}],"59Ugw":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "logout", ()=>logout);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("./alert");
+const logout = async ()=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: 'GET',
+            url: 'api/v1/users/logout',
+            withCredentials: true
+        });
+        if (res.data.status === 'success') {
+            (0, _alert.showAlert)('success', 'Logged out successfully');
+            window.setTimeout(()=>{
+                location.assign('/');
+            }, 1500);
+        }
+    } catch (error) {
+        console.log(error);
+        (0, _alert.showAlert)('error', error.response.data.message);
+    }
+};
+
+},{"axios":"fygP2","./alert":"a0yKe","@parcel/transformer-js/src/esmodule-helpers.js":"5ITdS"}]},["chLN9"], "chLN9", "parcelRequire11c7", {})
 
 //# sourceMappingURL=index.js.map

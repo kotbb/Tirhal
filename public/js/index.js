@@ -1,7 +1,8 @@
 import 'core-js';
 import 'regenerator-runtime/runtime';
 import { displayMap } from './leaflet';
-import { login, logout } from './login';
+import { login } from './login';
+import { logout } from './logout';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alert';

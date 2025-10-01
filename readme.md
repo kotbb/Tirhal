@@ -104,6 +104,7 @@ To get a local copy up and running, follow these simple steps.
     ```env
     NODE_ENV=development
     PORT=3000
+    FRONTEND_ORIGIN=<Your Localhost:Port>
 
     # Database
     DATABASE=<Your MongoDB Connection String>
@@ -112,11 +113,11 @@ To get a local copy up and running, follow these simple steps.
     # JWT
     JWT_SECRET=<A long, complex, and random string>
     JWT_EXPIRES_IN=90d
-    JWT_COOKIE_EXPIRES_IN=90
 
     # Stripe
     STRIPE_SECRET_KEY=<Your Stripe Secret Key>
-    STRIPE_WEBHOOK_SECRET=<Your Stripe Webhook Secret Key>
+    STRIPE_WEBHOOK_SECRET_PROD=<Your Stripe Webhook Secret Key>
+    STRIPE_WEBHOOK_SECRET_DEV=<Your Stripe Webhook Secret Key>
 
     # Email (using Mailtrap for development)
     EMAIL_HOST=sandbox.smtp.mailtrap.io
@@ -129,6 +130,10 @@ To get a local copy up and running, follow these simple steps.
 4.  **Run the application**
     ```sh
     npm start
+    ```
+    **Run the Webhook Stripe Server**
+    ```sh
+    stripe listen --forward-to localhost:<Your PORT>/webhook-checkout
     ```
 
 ## API Endpoints
