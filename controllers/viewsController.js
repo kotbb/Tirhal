@@ -41,6 +41,12 @@ const getLoginForm = (req, res) => {
   });
 };
 
+const getSignupForm = (req, res) => {
+  res.status(200).render('signup', {
+    title: 'Sign up for your account',
+  });
+}
+
 const getAccount = (req, res) => {
   res.status(200).render('account', {
     title: 'Your account',
@@ -95,6 +101,7 @@ export default {
   getOverview,
   getTour,
   getLoginForm,
+  getSignupForm,
   getAccount,
   getMyTours,
   updateUserData,

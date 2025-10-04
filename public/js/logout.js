@@ -4,7 +4,7 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'api/v1/users/logout',
+      url: `/api/v1/users/logout`,
       withCredentials: true,
     });
     if (res.data.status === 'success') {

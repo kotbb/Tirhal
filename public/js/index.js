@@ -6,6 +6,7 @@ import { logout } from './logout';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alert';
+import { signup } from './signup';
 
 const map = document.getElementById('map');
 if (map) {
@@ -14,6 +15,7 @@ if (map) {
 }
 
 const loginForm = document.querySelector('.form.form--login');
+const signupForm = document.querySelector('.form.form--signup');
 const logoutBtn = document.querySelector('.nav__el.nav__el--logout');
 const userDataForm = document.querySelector('.form.form-user-data');
 const userSettingsForm = document.querySelector('.form.form-user-settings');
@@ -26,6 +28,18 @@ if (loginForm) {
     const password = document.getElementById('password').value;
     login(email, password);
   });
+}
+
+if (signupForm) {
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+    const role = document.getElementById('role').value;
+    signup(name, email, password, passwordConfirm, role);
+  })
 }
 
 if (logoutBtn) {
