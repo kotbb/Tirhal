@@ -37,8 +37,8 @@ router
 router
   .route('/:id')
   .get(userController.getUser)
-  .patch(authController.restrictTo('admin'), userController.updateUser)
-  .delete(authController.restrictTo('admin'), userController.deleteUser);
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 // POST /tour/123456/reviews          // create a review with the id of tour and id of logged in user
 // GET /tour/123456/reviews           // get all reviews for the tour with the id of tour

@@ -1,6 +1,8 @@
 import express from 'express';
 import reviewController from '../controllers/reviewController.js';
 import authController from '../controllers/authController.js';
+import authorController from '../controllers/authorController.js';
+
 const router = express.Router({ mergeParams: true });
 
 // Protect all routes after this middleware
@@ -12,6 +14,7 @@ router
   .post(
     authController.restrictTo('user'),
     reviewController.setTourUserIds,
+    authorController.verifyTourForReview,
     reviewController.createReview
   );
 
@@ -20,10 +23,12 @@ router
   .get(reviewController.getReview)
   .patch(
     authController.restrictTo('user', 'admin'),
+    authorController.verifyReviewOwnership,
     reviewController.updateReview
   )
   .delete(
     authController.restrictTo('user', 'admin'),
+    authorController.verifyReviewOwnership,
     reviewController.deleteReview
   );
 

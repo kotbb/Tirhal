@@ -87,25 +87,41 @@ const protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.accessToken) {
     accessToken = req.cookies.accessToken;
   }
+
   // 2) Verify access token and get user
   let currentUser = await verifyTokenAndGetUser(
     accessToken,
     process.env.JWT_SECRET
   );
+
   // 3) If access token is invalid, try generate new access token with refresh token
   if (!currentUser) {
-    const { newAccessToken, newRefreshToken } =
-      await generateRefreshAccessToken(req, res);
-    currentUser = await verifyTokenAndGetUser(
-      newRefreshToken,
-      process.env.REFRESH_TOKEN_SECRET
+    try {
+      const { newAccessToken } = await generateRefreshAccessToken(req, res);
+      // Verify the new access token to get the user
+      currentUser = await verifyTokenAndGetUser(
+        newAccessToken,
+        process.env.JWT_SECRET
+      );
+    } catch (error) {
+      // If refresh token is also invalid, deny access
+      return next(
+        new AppError('You are not logged in! Please log in to get access.', 401)
+      );
+    }
+  }
+
+  // 4) If still no user found, deny access
+  if (!currentUser) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access.', 401)
     );
   }
-  // ** IMPORTANT ** Transfer the user to the next middlewares
-  if (currentUser) {
-    req.user = currentUser;
-    res.locals.user = currentUser;
-  }
+
+  // 5) Transfer the user to the next middlewares
+  req.user = currentUser;
+  res.locals.user = currentUser;
+
   // GRANT ACCESS TO PROTECTED ROUTE
   next();
 });
@@ -131,6 +147,14 @@ const isLoggedIn = catchAsync(async (req, res, next) => {
 // Restricting access to certain roles
 const restrictTo = (...roles) => {
   return (req, res, next) => {
+    // Check if user is authenticated
+    if (!req.user) {
+      return next(
+        new AppError('You are not logged in! Please log in to get access.', 401)
+      );
+    }
+
+    // Check if user has required role
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('You do not have permission to perform this action', 403)

@@ -2,11 +2,13 @@ import express from 'express';
 import tourController from '../controllers/tourController.js';
 import authController from '../controllers/authController.js';
 import reviewRouter from './reviewRoutes.js';
+import bookingRouter from './bookingRoutes.js';
 const router = express.Router();
 
 // router.param('id', tourController.checkId);  // that checks if id valid before mongoose
 
 router.use('/:tourId/reviews', reviewRouter);
+router.use('/:tourId/bookings', bookingRouter);
 
 // Tours Routes
 

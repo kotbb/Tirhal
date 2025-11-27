@@ -1,5 +1,6 @@
 import Tour from '../models/tourModel.js';
 import Booking from '../models/bookingModel.js';
+import Review from '../models/reviewModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import User from '../models/userModel.js';
@@ -69,6 +70,14 @@ const getMyTours = catchAsync(async (req, res, next) => {
   });
 });
 
+const getMyReviews = catchAsync(async (req, res, next) => {
+  const reviews = await Review.find({ user: req.user.id });
+  res.status(200).render('reviews', {
+    title: 'My Reviews',
+    reviews,
+  });
+});
+
 const updateUserData = catchAsync(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
@@ -104,6 +113,7 @@ export default {
   getSignupForm,
   getAccount,
   getMyTours,
+  getMyReviews,
   updateUserData,
   alerts,
 };

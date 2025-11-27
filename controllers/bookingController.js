@@ -3,6 +3,7 @@ import User from '../models/userModel.js';
 import Booking from '../models/bookingModel.js';
 import factory from './handlerFactory.js';
 import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
 import Stripe from 'stripe';
 import path from 'path';
 
@@ -75,6 +76,13 @@ const webhookCheckout = catchAsync(async (req, res, next) => {
   res.status(200).json({ received: true });
 });
 
+const setTourUserIds = (req, res, next) => {
+  if (!req.body.tour) req.body.tour = req.params.tourId;
+  if (!req.body.user) req.body.user = req.user.id;
+  next();
+};
+
+
 const createBooking = factory.createOne(Booking);
 const getBooking = factory.getOne(Booking);
 const getAllBookings = factory.getAll(Booking);
@@ -89,4 +97,5 @@ export default {
   getAllBookings,
   updateBooking,
   deleteBooking,
+  setTourUserIds
 };
