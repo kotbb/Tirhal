@@ -17,9 +17,12 @@ class APIFeatures {
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
     const filters = JSON.parse(queryStr);
 
+    
+
     // { difficulty: 'easy', duration: { gte: 5 } }   -> query object
     // { difficulty: 'easy', duration: { $gte: 5 } }  -> filtering
     // gte, gt, lte, lt
+    console.log(filters);
     this.query = this.query.find(filters);
     return this;
   }

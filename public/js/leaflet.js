@@ -8,6 +8,7 @@ export const displayMap = (locations) => {
     maxZoom: 19,
     attribution:
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    referrerPolicy: 'no-referrer',
   }).addTo(map);
 
   const points = [];

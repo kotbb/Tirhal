@@ -1,10 +1,10 @@
-# Natours - Tour Booking Application
+# Tirhal - Tour Booking Application
 
-Natours is a tour booking application built with modern backend technologies. It features a complete server-side rendered website for users and a full RESTful API for developers. The project demonstrates advanced features including user authentication, payment processing, map integration, and automated email services.
+Tirhal is a tour booking application built with modern backend technologies. It features a complete server-side rendered website for users and a full RESTful API for developers. The project demonstrates advanced features including user authentication, payment processing, map integration, and automated email services.
 
 ## Live Demo
 
-**View the live application here: [https://natours-kotb.vercel.app/](https://natours-kotb.vercel.app/)**
+**View the live application here: [https://tirhal-kotb.vercel.app/](https://tirhal-kotb.vercel.app/)**
 
 ---
 
@@ -91,7 +91,7 @@ To get a local copy up and running, follow these simple steps.
 
 1.  **Clone the repo**
     ```sh
-    git clone [https://github.com/kotbb/natours.git](https://github.com/kotbb/natours.git)
+    git clone [https://github.com/kotbb/tirhal.git](https://github.com/kotbb/tirhal.git)
     ```
 2.  **Install NPM packages**
     ```sh
@@ -124,7 +124,7 @@ To get a local copy up and running, follow these simple steps.
     EMAIL_PORT=2525
     EMAIL_USERNAME=<Your Mailtrap Username>
     EMAIL_PASSWORD=<Your Mailtrap Password>
-    EMAIL_FROM=Natours <noreply@natours.io>
+    EMAIL_FROM=Tirhal <noreply@tirhal.io>
     ```
 
 4.  **Run the application**

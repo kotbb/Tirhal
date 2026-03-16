@@ -56,7 +56,7 @@ class Email {
     await this.createNewTransport().sendMail(mailOptions);
   }
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to the Natours Family!');
+    await this.send('welcome', 'Welcome to the Tirhal!');
   }
   async sendPasswordReset() {
     await this.send(

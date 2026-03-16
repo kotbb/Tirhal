@@ -12,9 +12,7 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
 
-  const imageUrl = `${req.protocol}://${req.get('host')}/img/tours/${
-    tour.imageCover
-  }`;
+  const imageUrl = `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`;
 
   // 2) Create checkout session
   const session = await stripe.checkout.sessions.create({
