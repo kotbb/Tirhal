@@ -4,6 +4,7 @@ import Review from '../models/reviewModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import User from '../models/userModel.js';
+import Stripe from 'stripe';
 
 const getOverview = catchAsync(async (req, res, next) => {
   // 1) Get tour data from collection
@@ -46,7 +47,7 @@ const getSignupForm = (req, res) => {
   res.status(200).render('signup', {
     title: 'Sign up for your account',
   });
-}
+};
 
 const getAccount = (req, res) => {
   res.status(200).render('account', {
@@ -55,6 +56,31 @@ const getAccount = (req, res) => {
 };
 
 const getMyTours = catchAsync(async (req, res, next) => {
+
+  if (req.query.session_id) {
+    const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+  
+    if (
+      session &&
+      session.payment_status === 'paid' &&
+      session.customer_email === req.user.email
+    ) {
+      const existing = await Booking.findOne({
+        stripeSessionId: session.id,
+      });
+
+      if (!existing) {
+        await Booking.create({
+          tour: session.client_reference_id,
+          user: req.user.id,
+          price: session.amount_total / 100,
+          stripeSessionId: session.id,
+        });
+      }
+    }
+  }
+
   // 1) Find all bookings
   const bookings = await Booking.find({ user: req.user.id });
 
@@ -88,7 +114,7 @@ const updateUserData = catchAsync(async (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   );
 
   res.status(200).render('account', {

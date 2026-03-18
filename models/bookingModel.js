@@ -11,6 +11,11 @@ const bookingSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Booking must belong to a user.'],
   },
+  stripeSessionId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
   price: {
     type: Number,
     required: [true, 'Booking must have a price.'],

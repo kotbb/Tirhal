@@ -8,6 +8,7 @@ import Stripe from 'stripe';
 import path from 'path';
 
 const getCheckoutSession = catchAsync(async (req, res, next) => {
+
   const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
@@ -18,7 +19,7 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
-    success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
+    success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.tourId,
@@ -50,7 +51,10 @@ const createBookingCheckout = async (sessionData) => {
   const user = (await User.findOne({ email: sessionData.customer_email })).id;
   const price = sessionData.amount_total / 100;
 
-  await Booking.create({ tour, user, price });
+  const existing = await Booking.findOne({ stripeSessionId: sessionData.id });
+  if (existing) return;
+
+  await Booking.create({ tour, user, price, stripeSessionId: sessionData.id });
 };
 
 const webhookCheckout = catchAsync(async (req, res, next) => {
@@ -58,9 +62,10 @@ const webhookCheckout = catchAsync(async (req, res, next) => {
   const signature = req.headers['stripe-signature'];
 
   const webhookSecret =
-    process.env.NODE_ENV === 'production'
+    process.env.STRIPE_WEBHOOK_SECRET ||
+    (process.env.NODE_ENV === 'production'
       ? process.env.STRIPE_WEBHOOK_SECRET_PROD
-      : process.env.STRIPE_WEBHOOK_SECRET_DEV;
+      : process.env.STRIPE_WEBHOOK_SECRET_DEV);
 
   let event;
   try {
