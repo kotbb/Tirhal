@@ -7,6 +7,7 @@ import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alert';
 import { signup } from './signup';
+import { initOverviewSort } from './overviewSort';
 
 const map = document.getElementById('map');
 if (map) {
@@ -87,6 +88,8 @@ if (bookTourBtn) {
     bookTour(tourId);
   });
 }
+initOverviewSort();
+
 const alertMessage = document.querySelector('body').dataset.alert;
 if (alertMessage) {
   showAlert('success', alertMessage, 10);

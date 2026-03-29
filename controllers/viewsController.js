@@ -5,16 +5,32 @@ import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import User from '../models/userModel.js';
 import Stripe from 'stripe';
+import APIFeatures from '../utils/apiFeatures.js';
+
+const SORT_MAP = {
+  newest: '-createdAt',
+  'price-asc': 'price',
+  'price-desc': '-price',
+  rating: '-ratingsAverage',
+  'duration-asc': 'duration',
+  'duration-desc': '-duration',
+  name: 'name',
+};
 
 const getOverview = catchAsync(async (req, res, next) => {
-  // 1) Get tour data from collection
-  const tours = await Tour.find();
+  let sortKey = req.query.sort || 'newest';
+  if (!SORT_MAP[sortKey]) sortKey = 'newest';
 
-  // 2) Build template
-  // 3) Render that template using tour data from step 1
+  const query = { sort: SORT_MAP[sortKey] };
+
+  const features = new APIFeatures(Tour.find(), query).filter().sort();
+  const tours = await features.query;
+
   res.status(200).render('overview', {
     title: 'All Tours',
     tours,
+    showTourFilters: true,
+    currentSort: sortKey,
   });
 });
 
@@ -60,7 +76,7 @@ const getMyTours = catchAsync(async (req, res, next) => {
   if (req.query.session_id) {
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-  
+
     if (
       session &&
       session.payment_status === 'paid' &&
@@ -78,7 +94,7 @@ const getMyTours = catchAsync(async (req, res, next) => {
           stripeSessionId: session.id,
         });
       }
-    }
+    } 
   }
 
   // 1) Find all bookings
@@ -93,6 +109,7 @@ const getMyTours = catchAsync(async (req, res, next) => {
   res.status(200).render('overview', {
     title: 'My Tours',
     tours,
+    showTourFilters: false,
   });
 });
 

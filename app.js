@@ -79,6 +79,7 @@ const styleSrcUrls = [
   'https://api.mapbox.com/',
   'https://api.tiles.mapbox.com/',
   'https://fonts.googleapis.com/',
+  'https://fonts.gstatic.com/',
   'https://www.myfonts.com/fonts/radomir-tinkov/gilroy/*',
   'https://unpkg.com/',
 ];
@@ -168,6 +169,10 @@ app.use(
       'maxGroupSize',
       'difficulty',
       'price',
+      'sort',
+      'limit',
+      'page',
+      'fields',
     ],
   })
 );

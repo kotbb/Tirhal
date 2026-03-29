@@ -1,8 +1,26 @@
 extends base
 
 block content
-  main.main
-    .card-container
+  main.main(class=showTourFilters ? 'main--tours-overview' : '')
+    if showTourFilters
+      .tour-sort
+        label.tour-sort__bar(for='sort-tours')
+          svg.tour-sort__lead-icon(viewBox='0 0 24 24' aria-hidden='true' focusable='false')
+            path(fill='currentColor' d='M8 10l4-3 4 3H8zm0 4h8l-4 3-4-3z')
+          span.tour-sort__prefix Sort By:
+          select#sort-tours.tour-sort__select(name='sort' aria-label='Sort tours')
+            option(value='newest' selected=(currentSort === 'newest')) Recommended
+            option(value='price-asc' selected=(currentSort === 'price-asc')) Price: low to high
+            option(value='price-desc' selected=(currentSort === 'price-desc')) Price: high to low
+            option(value='rating' selected=(currentSort === 'rating')) Highest rated
+            option(value='duration-asc' selected=(currentSort === 'duration-asc')) Duration: shortest
+            option(value='duration-desc' selected=(currentSort === 'duration-desc')) Duration: longest
+            option(value='name' selected=(currentSort === 'name')) Name (A–Z)
+          svg.tour-sort__chevron(viewBox='0 0 24 24' aria-hidden='true' focusable='false')
+            use(xlink:href='/img/icons.svg#icon-chevron-down')
+      p.tour-sort__empty#tour-sort-empty(hidden=tours.length > 0) No tours match this sort. Try another option.
+
+    .card-container#tour-cards
       each tour in tours
         .card
           .card__header
