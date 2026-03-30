@@ -67,6 +67,10 @@ const verifyTourForReview = catchAsync(async (req, res, next) => {
   }
 
   // Check if user has booked this tour
+
+  if(req.user.role === 'admin') {
+    return next();
+  }
   const booking = await Booking.findOne({ tour: tourId, user: currentUserId });
 
   if (!booking) {
@@ -98,7 +102,7 @@ const verifyReviewOwnership = catchAsync(async (req, res, next) => {
   }
 
   // Check ownership - admins can access any review
-  if (review.user.toString() !== currentUserId && req.user.role !== 'admin') {
+  if (review.user.id !== currentUserId && req.user.role !== 'admin') {
     return next(
       new AppError('You do not have permission to perform this action', 403)
     );
@@ -108,42 +112,9 @@ const verifyReviewOwnership = catchAsync(async (req, res, next) => {
   next();
 });
 
-const verifyGuideAccess = catchAsync(async (req, res, next) => {
-  if (!req.user) {
-    return next(
-      new AppError('You are not logged in! Please log in to get access.', 401)
-    );
-  }
-
-  const currentUserId = req.user.id;
-  const tourId = req.params.tourId || req.body.tour;
-
-  if (!tourId) {
-    return next(new AppError('You must provide a tour ID', 400));
-  }
-
-  const tour = await Tour.findById(tourId);
-
-  if (!tour) {
-    return next(new AppError('Tour not found', 404));
-  }
-
-  // Admins can access any tour
-  if (req.user.role === 'admin') {
-    return next();
-  }
-  const isAssigned = tour.guides.some(
-    (guide) => guide.toString() === currentUserId.toString()
-  );
-  if (!isAssigned) {
-    return next(new AppError('You are not assigned to this tour', 403));
-  }
-  next();
-});
-
 export default {
   verifyBookingOwnership,
   verifyTourForReview,
   verifyReviewOwnership,
-  verifyGuideAccess,
+
 };

@@ -72,10 +72,11 @@ const getAccount = (req, res) => {
 };
 
 const getMyTours = catchAsync(async (req, res, next) => {
-
   if (req.query.session_id) {
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+    const session = await stripe.checkout.sessions.retrieve(
+      req.query.session_id,
+    );
 
     if (
       session &&
@@ -94,7 +95,7 @@ const getMyTours = catchAsync(async (req, res, next) => {
           stripeSessionId: session.id,
         });
       }
-    } 
+    }
   }
 
   // 1) Find all bookings

@@ -8,7 +8,6 @@ import Stripe from 'stripe';
 import path from 'path';
 
 const getCheckoutSession = catchAsync(async (req, res, next) => {
-
   const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
@@ -50,7 +49,12 @@ const createBookingCheckout = async (sessionData) => {
   const tour = sessionData.client_reference_id;
   const user = (await User.findOne({ email: sessionData.customer_email })).id;
   const price = sessionData.amount_total / 100;
-  console.log('createBookingCheckout via webhook:', { tour, user, price, stripeSessionId: sessionData.id });
+  console.log('createBookingCheckout via webhook:', {
+    tour,
+    user,
+    price,
+    stripeSessionId: sessionData.id,
+  });
 
   const existing = await Booking.findOne({ stripeSessionId: sessionData.id });
   if (existing) return;
@@ -59,7 +63,6 @@ const createBookingCheckout = async (sessionData) => {
 };
 
 const webhookCheckout = catchAsync(async (req, res, next) => {
-  
   const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
   const signature = req.headers['stripe-signature'];
 
@@ -76,7 +79,7 @@ const webhookCheckout = catchAsync(async (req, res, next) => {
     return res.status(400).send(`Webhook error: ${error.message}`);
   }
   if (event.type === 'checkout.session.completed') {
-    console.log("in checkout.session.completed");
+    console.log('in checkout.session.completed');
     await createBookingCheckout(event.data.object);
   }
   res.status(200).json({ received: true });
@@ -88,6 +91,24 @@ const setTourUserIds = (req, res, next) => {
   next();
 };
 
+// Sets booking user from session, tour from URL or body, price from tour
+const setBookingCreateFields = catchAsync(async (req, res, next) => {
+  req.body.user = req.user.id;
+
+  const tourId = req.query.tourId || req.body.tour;
+  if (!tourId) {
+    return next(new AppError('A tour Id is required', 400));
+  }
+  req.body.tour = tourId;
+
+  const tour = await Tour.findById(tourId);
+  if (!tour) {
+    return next(new AppError('No tour found with that ID.', 404));
+  }
+
+  req.body.price = tour.price;
+  next();
+});
 
 const createBooking = factory.createOne(Booking);
 const getBooking = factory.getOne(Booking);
@@ -103,5 +124,6 @@ export default {
   getAllBookings,
   updateBooking,
   deleteBooking,
-  setTourUserIds
+  setTourUserIds,
+  setBookingCreateFields,
 };

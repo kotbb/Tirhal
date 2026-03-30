@@ -15,13 +15,13 @@ router
   .get(
     authController.restrictTo('admin', 'lead-guide'),
     bookingController.setTourUserIds,
-    authorController.verifyGuideAccess,
     bookingController.getAllBookings
   );
 
 router.post(
   '/',
   authController.restrictTo('admin'),
+  bookingController.setBookingCreateFields,
   bookingController.createBooking
 );
 
@@ -30,16 +30,15 @@ router
   .get(
     authController.restrictTo('admin', 'lead-guide'),
     authorController.verifyBookingOwnership,
-    authorController.verifyGuideAccess,
     bookingController.getBooking
   )
   .patch(
-    authController.restrictTo('admin'),
+    authController.restrictTo('admin', 'lead-guide'),
     authorController.verifyBookingOwnership,
     bookingController.updateBooking
   )
   .delete(
-    authController.restrictTo('admin'),
+    authController.restrictTo('admin', 'lead-guide'),
     authorController.verifyBookingOwnership,
     bookingController.deleteBooking
   );

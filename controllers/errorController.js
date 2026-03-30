@@ -56,7 +56,7 @@ const sendErrorProd = (err, req, res) => {
     }
     // Programming or other unknown error: don't leak our error details
     // 1) Log error
-    console.error('ERROR 💥', err); // to highlight the error in the console in the production environment which we'll deploy to. (heroku)
+    console.error('ERROR 💥', err);
 
     // 2) Send generic message
     return res.status(500).json({
@@ -72,6 +72,14 @@ const sendErrorProd = (err, req, res) => {
     });
   }
   console.error('ERROR 💥', err);
+  console.error('ERROR 💥 detail', {
+    name: err.name,
+    message: err.message,
+    code: err.code,
+    responseCode: err.responseCode,
+    response: err.response,
+    command: err.command,
+  });
   return res.status(500).render('error', {
     title: 'Something went wrong!',
     msg: 'Please try again later.',
@@ -84,11 +92,11 @@ export default (err, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
-    let error = { ...err };
-    error.message = err.message;
-    if (err.name === 'CastError') error = handleCastErrorDB(error);
-    if (err.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (err.name === 'ValidationError') error = handleValidationErrorDB(error);
+    // Keep the real Error instance so SMTP fields (code, response, …) survive to sendErrorProd logging
+    let error = err;
+    if (err.name === 'CastError') error = handleCastErrorDB(err);
+    if (err.code === 11000) error = handleDuplicateFieldsDB(err);
+    if (err.name === 'ValidationError') error = handleValidationErrorDB(err);
     if (err.name === 'JsonWebTokenError') error = handleJWTError();
     if (err.name === 'TokenExpiredError') error = handleJWTExpiredError();
     sendErrorProd(error, req, res);
